@@ -1236,8 +1236,6 @@ class Lattice(LatticeStructure):
             draw_sites(ax, points, atom.radius, color=col, label=label, zorder=atomz)
         # Draw connections
         if show_connections:
-            ccolor = "k"
-            pcolor = "0.5"
             positions = self.positions
             hop_colors = connection_color_array(self.num_base, ccolor, con_colors)
             per_colors = connection_color_array(self.num_base, pcolor)

@@ -1275,7 +1275,7 @@ class Lattice(LatticeStructure):
         fig.tight_layout()
         if show:
             plt.show()
-        return ax
+        return fig, ax
 
     def __repr__(self) -> str:
         shape = str(self.shape) if self.shape is not None else "None"

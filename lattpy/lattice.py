@@ -1169,6 +1169,7 @@ class Lattice(LatticeStructure):
         pscale: float = 0.5,
         show_periodic: bool = True,
         show_indices: bool = False,
+        show_connections: bool = True, 
         index_offset: float = 0.1,
         con_colors: Sequence = None,
         adjustable: str = "box",
@@ -1194,11 +1195,13 @@ class Lattice(LatticeStructure):
             If True the periodic connections will be shown.
         show_indices : bool, optional
             If True the index of the sites will be shown.
+        show_connections: bool, optional
+            If True draws the connections in the lattice.
         index_offset : float, optional
             The positional offset of the index text labels. Only used if
             `show_indices=True`.
         con_colors : Sequence[tuple], optional
-            list of colors to override the defautl connection color. Each element
+            list of colors to override the default connection color. Each element
             has to be a tuple with the first two elements being the atom indices of
             the pair and the third element the color, for example ``[(0, 0, 'r')]``.
         adjustable : None or {'box', 'datalim'}, optional
@@ -1226,30 +1229,31 @@ class Lattice(LatticeStructure):
             label = atom.name
             draw_sites(ax, points, atom.radius, color=col, label=label, zorder=atomz)
         # Draw connections
-        ccolor = "k"
-        pcolor = "0.5"
-        positions = self.positions
-        hop_colors = connection_color_array(self.num_base, ccolor, con_colors)
-        per_colors = connection_color_array(self.num_base, pcolor)
-        for i in range(self.num_sites):
-            at1 = self.alpha(i)
-            p1 = positions[i]
-            for j in self.data.get_neighbors(i, periodic=False, unique=True):
-                p2 = positions[j]
-                at2 = self.alpha(j)
-                color = hop_colors[at1][at2]
-                draw_vectors(ax, p2 - p1, p1, color=color, lw=lw, zorder=hopz)
-            if show_periodic:
-                mask = self.data.neighbor_mask(i, periodic=True)
-                idx = self.data.neighbors[i, mask]
-                pnvecs = self.data.pnvecs[i, mask]
-                neighbor_pos = self.data.positions[idx]
-                for j, x in enumerate(neighbor_pos):
-                    at2 = self.alpha(idx[j])
-                    x = self.translate(-pnvecs[j], x)
-                    color = per_colors[at1][at2]
-                    vec = pscale * (x - p1)
-                    draw_vectors(ax, vec, p1, color=color, lw=lw, zorder=hopz)
+        if show_connections:
+            ccolor = "k"
+            pcolor = "0.5"
+            positions = self.positions
+            hop_colors = connection_color_array(self.num_base, ccolor, con_colors)
+            per_colors = connection_color_array(self.num_base, pcolor)
+            for i in range(self.num_sites):
+                at1 = self.alpha(i)
+                p1 = positions[i]
+                for j in self.data.get_neighbors(i, periodic=False, unique=True):
+                    p2 = positions[j]
+                    at2 = self.alpha(j)
+                    color = hop_colors[at1][at2]
+                    draw_vectors(ax, p2 - p1, p1, color=color, lw=lw, zorder=hopz)
+                if show_periodic:
+                    mask = self.data.neighbor_mask(i, periodic=True)
+                    idx = self.data.neighbors[i, mask]
+                    pnvecs = self.data.pnvecs[i, mask]
+                    neighbor_pos = self.data.positions[idx]
+                    for j, x in enumerate(neighbor_pos):
+                        at2 = self.alpha(idx[j])
+                        x = self.translate(-pnvecs[j], x)
+                        color = per_colors[at1][at2]
+                        vec = pscale * (x - p1)
+                        draw_vectors(ax, vec, p1, color=color, lw=lw, zorder=hopz)
         # Add index labels
         if show_indices:
             positions = [self.position(i) for i in range(self.num_sites)]

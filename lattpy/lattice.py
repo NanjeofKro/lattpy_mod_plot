@@ -1175,6 +1175,8 @@ class Lattice(LatticeStructure):
         adjustable: str = "box",
         ax: Union[plt.Axes, Axes3D] = None,
         show: bool = False,
+        ccolor: str ="k",
+        pcolor: str = "0.5"
     ) -> Union[plt.Axes, Axes3D]:  # pragma: no cover
         """Plot the cached lattice.
 
@@ -1213,6 +1215,10 @@ class Lattice(LatticeStructure):
             Parent plot. If None, a new plot is initialized.
         show : bool, optional
             If True, show the resulting plot.
+        ccolor: str, optional
+            Sets global color used for lattice connections.
+        pcolor: 
+            Sets gloabal color used for periodic lattice connections.
         """
         logger.debug("Plotting lattice")
         if self.dim > 3:

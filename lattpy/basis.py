@@ -125,9 +125,9 @@ class LatticeBasis:
         The argument "angle" can be either 60 or 120, depending on the desired
         angle between the basis vectors"""
         if angle==60:
-            vectors = a / 2 * np.array([[3, np.sqrt(3)], [3, -np.sqrt(3)]])
+            vectors = a / 2 * np.array([[1, np.sqrt(3)], [-1, np.sqrt(3)]])
         if angle==120:
-            vectors = a / 2 * np.array([[np.sqrt(3),3], [-np.sqrt(3),3 ]])
+            vectors = a / 2 * np.array([[np.sqrt(3),1], [-np.sqrt(3),1 ]])
         return cls(vectors, **kwargs)
 
     @classmethod
@@ -137,11 +137,11 @@ class LatticeBasis:
         angle between the basis vectors"""
         if angle==60:
             vectors = (
-                a / 2 * np.array([[3, np.sqrt(3), 0], [3, -np.sqrt(3), 0], [0, 0, az]])
+                a / 2 * np.array([[1, np.sqrt(3), 0], [-1, np.sqrt(3), 0], [0, 0, az*2/a]])
                 )
         if angle==120:
             vectors = (
-                a / 2 * np.array([[np.sqrt(3),3 , 0], [np.sqrt(3), -3, 0], [0, 0, az]])
+                a / 2 * np.array([[np.sqrt(3),1 , 0], [-np.sqrt(3), 1, 0], [0, 0, az*2/a]])
                 )
         return cls(vectors, **kwargs)
 

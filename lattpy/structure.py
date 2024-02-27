@@ -1436,6 +1436,7 @@ class LatticeStructure(LatticeBasis):
         adjustable: str = "box",
         ax: Union[plt.Axes, Axes3D] = None,
         show: bool = False,
+        ccolor: str = 'k'
     ) -> Union[plt.Axes, Axes3D]:  # pragma: no cover
         """Plot the unit cell of the lattice.
 
@@ -1474,6 +1475,9 @@ class LatticeStructure(LatticeBasis):
             Parent plot. If None, a new plot is initialized.
         show : bool, optional
             If True, show the resulting plot.
+        ccolor: string, optional
+            Specifies a global connection color as a matplotlib color string.
+            Default is 'k'.
         """
         logger.debug("Plotting unit cell")
         if self.dim > 3:
@@ -1499,7 +1503,6 @@ class LatticeStructure(LatticeBasis):
             draw_sites(ax, points, rad, color=col, label=atom.name, zorder=atomz)
             colors.append(col)
         # Draw Neighbors and connections
-        ccolor = "k"
         hop_colors = connection_color_array(self.num_base, ccolor, con_colors)
         if show_neighbors:
             position_arr = [list() for _ in range(self.num_base)]

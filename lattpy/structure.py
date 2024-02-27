@@ -1544,7 +1544,7 @@ class LatticeStructure(LatticeBasis):
         fig.tight_layout()
         if show:
             plt.show()
-        return ax
+        return fig, ax
 
     def __repr__(self) -> str:
         return (

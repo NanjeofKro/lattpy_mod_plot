@@ -120,17 +120,29 @@ class LatticeBasis:
         return cls(vectors, **kwargs)
 
     @classmethod
-    def hexagonal(cls, a: float = 1.0, **kwargs):
-        """Initializes a 2D lattice with hexagonal basis vectors."""
-        vectors = a / 2 * np.array([[3, np.sqrt(3)], [3, -np.sqrt(3)]])
+    def hexagonal(cls, a: float = 1.0, angle=60,**kwargs):
+        """Initializes a 2D lattice with hexagonal basis vectors.
+        The argument "angle" can be either 60 or 120, depending on the desired
+        angle between the basis vectors"""
+        if angle==60:
+            vectors = a / 2 * np.array([[3, np.sqrt(3)], [3, -np.sqrt(3)]])
+        if angle==120:
+            vectors = a / 2 * np.array([[np.sqrt(3),3], [-np.sqrt(3),3 ]])
         return cls(vectors, **kwargs)
 
     @classmethod
-    def hexagonal3d(cls, a: float = 1.0, az: float = 1.0, **kwargs):
-        """Initializes a 3D lattice with hexagonal basis vectors."""
-        vectors = (
-            a / 2 * np.array([[3, np.sqrt(3), 0], [3, -np.sqrt(3), 0], [0, 0, az]])
-        )
+    def hexagonal3d(cls, a: float = 1.0, az: float = 1.0,angle=60, **kwargs):
+        """Initializes a 3D lattice with hexagonal basis vectors.
+        The argument "angle" can be either 60 or 120, depending on the desired
+        angle between the basis vectors"""
+        if angle==60:
+            vectors = (
+                a / 2 * np.array([[3, np.sqrt(3), 0], [3, -np.sqrt(3), 0], [0, 0, az]])
+                )
+        if angle==120:
+            vectors = (
+                a / 2 * np.array([[np.sqrt(3),3 , 0], [np.sqrt(3), -3, 0], [0, 0, az]])
+                )
         return cls(vectors, **kwargs)
 
     @classmethod
